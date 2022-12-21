@@ -8,16 +8,15 @@
 import SwiftUI
 import MapKit
 
-// A UIViewRepresentable is a wrapper for a UIKit view that you use to integrate that view into your SwiftUI view hierarchy.
+// A 'UIViewRepresentable' is a wrapper for a UIKit view that you use to integrate that view into your SwiftUI view hierarchy.
 // Because we need complex map functionality like annotations and routes, we need to use UIKit's map (instead of SwiftUI's).
-
 struct UberMapViewRepresentable: UIViewRepresentable {
-    
     let mapView = MKMapView()
     let locationManager = LocationManager()
     
     // Configure the MapView.
     func makeUIView(context: Context) -> some UIView {
+        // The 'UberMapViewRepresentable' protocol does not know about the map view delegate (all of that is handled through the coordinator).
         mapView.delegate = context.coordinator
         mapView.isRotateEnabled = false
         mapView.showsUserLocation = false
@@ -39,8 +38,7 @@ struct UberMapViewRepresentable: UIViewRepresentable {
 
 
 extension UberMapViewRepresentable {
-    
-    // We can conform to the 'MKMapViewDelegate' protocol that has all of the functions we need in order to perform the complex operations in our map view (this custom coordinator allows us to pull in functionality from UIKit).
+    // We can conform to the 'MKMapViewDelegate' protocol, which has all of the functions we need in order to perform the complex operations in our map view (this custom coordinator allows us to pull in functionality from UIKit).
     class MapCoordinator: NSObject, MKMapViewDelegate {
         let parent: UberMapViewRepresentable
         

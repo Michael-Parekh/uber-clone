@@ -22,11 +22,11 @@ class LocationManager: NSObject, ObservableObject {
     }
 }
 
-// We need to set up delegate functions.
 extension LocationManager: CLLocationManagerDelegate {
     // This function updates the user's location in the app.
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
         guard !locations.isEmpty else { return }
+        // The purpose of the 'LocationManager' is to request permissions from the user and get their location one time, before our 'mapView' handles the rest of the location updates (this application does not require constant pinging of location as that is inefficient).
         locationManager.stopUpdatingLocation()
     }
 }
