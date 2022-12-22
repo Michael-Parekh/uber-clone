@@ -11,6 +11,7 @@ struct LocationSearchView: View {
     
     @State private var startLocationText = ""
     @State private var destinationLocationText = ""
+    @StateObject var viewModel = LocationSearchViewModel()
     
     var body: some View {
         VStack {
@@ -38,7 +39,8 @@ struct LocationSearchView: View {
                         .background(Color(.systemGroupedBackground))
                         .padding(.trailing)
                     
-                    TextField("Where to?", text: $destinationLocationText)
+                    // Provide the 'LocationSearchViewModel' with the query fragment (so that we can get autocomplete results).
+                    TextField("Where to?", text: $viewModel.queryFragment)
                         .frame(height: 32)
                         .background(Color(.systemGray4))
                         .padding(.trailing)
@@ -53,9 +55,9 @@ struct LocationSearchView: View {
             // 'ScrollView' for the list view (list of potential addresses).
             ScrollView {
                 VStack(alignment: .leading) {
-                    // Utilize dummy location cells for now.
-                    ForEach(0 ..< 20, id: \.self) { _ in
-                        LocationSearchResultCell()
+                    ForEach(viewModel.results, id: \.self) { result in
+                        // Pass in dynamic address data for the 'LocationSearchResultCell' view.
+                        LocationSearchResultCell(title: result.title, subtitle: result.subtitle)
                     }
                 }
             }
