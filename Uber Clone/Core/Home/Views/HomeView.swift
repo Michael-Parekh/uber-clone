@@ -7,6 +7,7 @@
 
 import SwiftUI
 
+// The 'HomeView' will be very complex. To keep scalability in mind, extract functionality to as many sub-views as possible. 
 struct HomeView: View {
     var body: some View {
         // Utilize a Z-Stack to place the 'LocationSearchActivationView' search bar on top of the map view.
@@ -16,6 +17,10 @@ struct HomeView: View {
             
             LocationSearchActivationView()
                 .padding(.top, 72)
+            
+            MapViewActionButton()
+                .padding(.leading)
+                .padding(.top, 4)
         }
     }
 }
