@@ -10,8 +10,9 @@ import SwiftUI
 struct LocationSearchView: View {
     
     @State private var startLocationText = ""
-    @State private var destinationLocationText = ""
-    @StateObject var viewModel = LocationSearchViewModel()
+    // Create a binding property that determines whether or not the 'LocationSearchView' is shown (after a location is tapped in the list).
+    @Binding var showLocationSearchView: Bool
+    @EnvironmentObject var viewModel: LocationSearchViewModel
     
     var body: some View {
         VStack {
@@ -58,6 +59,11 @@ struct LocationSearchView: View {
                     ForEach(viewModel.results, id: \.self) { result in
                         // Pass in dynamic address data for the 'LocationSearchResultCell' view.
                         LocationSearchResultCell(title: result.title, subtitle: result.subtitle)
+                            .onTapGesture {
+                                // If the user taps on a location result, send it to the view model (this is needed for the 'UberMapViewRepresentable') and close the location search view.
+                                viewModel.selectLocation(result.title)
+                                showLocationSearchView.toggle()
+                            }
                     }
                 }
             }
@@ -68,6 +74,6 @@ struct LocationSearchView: View {
 
 struct LocationSearchView_Previews: PreviewProvider {
     static var previews: some View {
-        LocationSearchView()
+        LocationSearchView(showLocationSearchView: .constant(false))
     }
 }

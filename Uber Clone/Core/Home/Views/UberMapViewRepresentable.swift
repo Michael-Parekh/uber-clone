@@ -13,6 +13,8 @@ import MapKit
 struct UberMapViewRepresentable: UIViewRepresentable {
     let mapView = MKMapView()
     let locationManager = LocationManager()
+    // We need a 'StateObject' that will allow us to observe changes on the view model. Whenever the 'selectedLocation' property gets populated, the 'updateUIView' function will get triggered.
+    @EnvironmentObject var locationViewModel: LocationSearchViewModel
     
     // Configure the MapView.
     func makeUIView(context: Context) -> some UIView {

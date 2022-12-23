@@ -21,7 +21,7 @@ struct HomeView: View {
             
             // Presentation logic on which view to show based on the 'showLocationSearchView' state (when the state changes, the view redraws itself).
             if showLocationSearchView {
-                LocationSearchView()
+                LocationSearchView(showLocationSearchView: $showLocationSearchView)
             } else {
                 LocationSearchActivationView()
                     .padding(.top, 72)
