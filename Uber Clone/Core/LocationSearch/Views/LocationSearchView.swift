@@ -61,7 +61,7 @@ struct LocationSearchView: View {
                         LocationSearchResultCell(title: result.title, subtitle: result.subtitle)
                             .onTapGesture {
                                 // If the user taps on a location result, send it to the view model (this is needed for the 'UberMapViewRepresentable') and close the location search view.
-                                viewModel.selectLocation(result.title)
+                                viewModel.selectLocation(result)
                                 showLocationSearchView.toggle()
                             }
                     }

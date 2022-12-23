@@ -29,7 +29,10 @@ struct UberMapViewRepresentable: UIViewRepresentable {
     
     // This function is in charge of updating the view when we want to do something (e.g. draw a polyline when the user selects a location).
     func updateUIView(_ uiView: UIViewType, context: Context) {
-        
+        // Convert the 'selectedLocation' string to a location object. In order to generate annotations on our map, we need more data.
+        if let coordinate = locationViewModel.selectedLocationCoordinate {
+            print("DEBUG: Selected coordinates in map view \(coordinate)")
+        }
     }
     
     // Return a custom 'MapCoordinator' object that we created.
