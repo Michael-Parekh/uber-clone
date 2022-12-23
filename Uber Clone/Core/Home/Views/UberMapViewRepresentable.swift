@@ -31,7 +31,7 @@ struct UberMapViewRepresentable: UIViewRepresentable {
     func updateUIView(_ uiView: UIViewType, context: Context) {
         // Convert the 'selectedLocation' string to a location object. In order to generate annotations on our map, we need more data.
         if let coordinate = locationViewModel.selectedLocationCoordinate {
-            print("DEBUG: Selected coordinates in map view \(coordinate)")
+            context.coordinator.addAndSelectAnnotation(withCoordinate: coordinate)
         }
     }
     
@@ -45,12 +45,19 @@ struct UberMapViewRepresentable: UIViewRepresentable {
 extension UberMapViewRepresentable {
     // We can conform to the 'MKMapViewDelegate' protocol, which has all of the functions we need in order to perform the complex operations in our map view (this custom coordinator allows us to pull in functionality from UIKit).
     class MapCoordinator: NSObject, MKMapViewDelegate {
+        
+        // MARK: - Properties
+        
         let parent: UberMapViewRepresentable
+        
+        // MARK: - Lifecycle
         
         init(parent: UberMapViewRepresentable) {
             self.parent = parent
             super.init()
         }
+        
+        // MARK: - MKMapViewDelegate
         
         // Tells the delegate that the location of the user was changed/updated.
         func mapView(_ mapView: MKMapView, didUpdate userLocation: MKUserLocation) {
@@ -61,6 +68,23 @@ extension UberMapViewRepresentable {
             )
             
             parent.mapView.setRegion(region, animated: true)
+        }
+        
+        // MARK: - Helpers
+        
+        // This function will help us add a destination annotation to the map when a location is selected.
+        func addAndSelectAnnotation(withCoordinate coordinate: CLLocationCoordinate2D) {
+            // Remove the previous annotations from the map view.
+            parent.mapView.removeAnnotations(parent.mapView.annotations)
+            
+            let anno = MKPointAnnotation()
+            anno.coordinate = coordinate
+            parent.mapView.addAnnotation(anno)
+            // Makes the pin larger.
+            parent.mapView.selectAnnotation(anno, animated: true)
+            
+            // Adjust the region of the map view to include both the current location and destination annotation.
+            parent.mapView.showAnnotations(parent.mapView.annotations, animated: true)
         }
     }
 }
