@@ -65,7 +65,40 @@ struct RideRequestView: View {
             
             // MARK: - Ride Type Selection View
             
+            Text("SUGGESTED RIDES")
+                .font(.subheadline)
+                .fontWeight(.semibold)
+                .padding()
+                .foregroundColor(.gray)
+                .frame(maxWidth: .infinity, alignment: .leading)
             
+            // Horizontal scrollable view of all of the ride options (e.g. Uber Black).
+            ScrollView(.horizontal) { 
+                HStack(spacing: 12) {
+                    ForEach(0 ..< 3, id: \.self) { _ in
+                        VStack(alignment: .leading) {
+                            // The image will scale itself to fit the frame of the VStack because of 'scaledToFit'.
+                            Image("uber-x")
+                                .resizable()
+                                .scaledToFit()
+                            
+                            // Wrap the text in its own VStack so that we can apply custom spacing and other propeerties to it.
+                            VStack(spacing: 4) {
+                                Text("UberX")
+                                    .font(.system(size: 14, weight: .semibold))
+                                
+                                Text("$22.04")
+                                    .font(.system(size: 14, weight: .semibold))
+                            }
+                            .padding(8)
+                        }
+                        .frame(width: 112, height: 140)
+                        .background(Color(.systemGroupedBackground))
+                        .cornerRadius(10)
+                    }
+                }
+            }
+            .padding(.horizontal)
             
             // MARK: - Payment Options View
             
