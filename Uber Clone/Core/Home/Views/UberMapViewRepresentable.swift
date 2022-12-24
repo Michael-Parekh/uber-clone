@@ -13,6 +13,7 @@ import MapKit
 struct UberMapViewRepresentable: UIViewRepresentable {
     let mapView = MKMapView()
     let locationManager = LocationManager()
+    @Binding var mapState: MapViewState
     // We need a 'StateObject' that will allow us to observe changes on the view model. Whenever the 'selectedLocation' property gets populated, the 'updateUIView' function will get triggered.
     @EnvironmentObject var locationViewModel: LocationSearchViewModel
     
@@ -29,10 +30,21 @@ struct UberMapViewRepresentable: UIViewRepresentable {
     
     // This function is in charge of updating the view when we want to do something (e.g. draw a polyline when the user selects a location).
     func updateUIView(_ uiView: UIViewType, context: Context) {
-        // Convert the 'selectedLocation' string to a location object. In order to generate annotations on our map, we need more data.
-        if let coordinate = locationViewModel.selectedLocationCoordinate {
-            context.coordinator.addAndSelectAnnotation(withCoordinate: coordinate)
-            context.coordinator.configurePolyline(withDestinationCoordinate: coordinate)
+        print("DEBUG: Map state is \(mapState)")
+        
+        switch mapState {
+        case .noInput:
+            context.coordinator.clearMapViewAndRecenterOnUserLocation()
+            break
+        case .searchingForLocation:
+            break
+        case .locationSelected:
+            // If a location is selected, convert the 'selectedLocation' string to a location object. In order to generate annotations on our map, we need more data.
+            if let coordinate = locationViewModel.selectedLocationCoordinate {
+                context.coordinator.addAndSelectAnnotation(withCoordinate: coordinate)
+                context.coordinator.configurePolyline(withDestinationCoordinate: coordinate)
+            }
+            break
         }
     }
     
@@ -51,6 +63,7 @@ extension UberMapViewRepresentable {
         
         let parent: UberMapViewRepresentable
         var userLocationCoordinate: CLLocationCoordinate2D?
+        var currentRegion: MKCoordinateRegion?
         
         // MARK: - Lifecycle
         
@@ -70,6 +83,7 @@ extension UberMapViewRepresentable {
                 span: MKCoordinateSpan(latitudeDelta: 0.05, longitudeDelta: 0.05)
             )
             
+            self.currentRegion = region
             parent.mapView.setRegion(region, animated: true)
         }
         
@@ -127,6 +141,16 @@ extension UberMapViewRepresentable {
                 // Get the first possible route because it is usually the fastest.
                 guard let route = response?.routes.first else { return }
                 completion(route)
+            }
+        }
+        
+        // Function to help clear the map view and remove existing routes (remove all annotations/overlays and recenter).
+        func clearMapViewAndRecenterOnUserLocation() {
+            parent.mapView.removeAnnotations(parent.mapView.annotations)
+            parent.mapView.removeOverlays(parent.mapView.overlays)
+            
+            if let currentRegion = currentRegion {
+                parent.mapView.setRegion(currentRegion, animated: true)
             }
         }
     }

@@ -11,7 +11,7 @@ struct LocationSearchView: View {
     
     @State private var startLocationText = ""
     // Create a binding property that determines whether or not the 'LocationSearchView' is shown (after a location is tapped in the list).
-    @Binding var showLocationSearchView: Bool
+    @Binding var mapState: MapViewState
     @EnvironmentObject var viewModel: LocationSearchViewModel
     
     var body: some View {
@@ -62,7 +62,7 @@ struct LocationSearchView: View {
                             .onTapGesture {
                                 // If the user taps on a location result, send it to the view model (this is needed for the 'UberMapViewRepresentable') and close the location search view.
                                 viewModel.selectLocation(result)
-                                showLocationSearchView.toggle()
+                                mapState = .locationSelected
                             }
                     }
                 }
@@ -74,6 +74,6 @@ struct LocationSearchView: View {
 
 struct LocationSearchView_Previews: PreviewProvider {
     static var previews: some View {
-        LocationSearchView(showLocationSearchView: .constant(false))
+        LocationSearchView(mapState: .constant(.searchingForLocation))
     }
 }
