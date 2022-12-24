@@ -73,7 +73,7 @@ struct RideRequestView: View {
                 .frame(maxWidth: .infinity, alignment: .leading)
             
             // Horizontal scrollable view of all of the ride options (e.g. Uber Black).
-            ScrollView(.horizontal) { 
+            ScrollView(.horizontal) {
                 HStack(spacing: 12) {
                     ForEach(0 ..< 3, id: \.self) { _ in
                         VStack(alignment: .leading) {
@@ -100,10 +100,50 @@ struct RideRequestView: View {
             }
             .padding(.horizontal)
             
+            Divider()
+                .padding(.vertical, 8)
+            
             // MARK: - Payment Options View
             
+            HStack(spacing: 12) {
+                Text("Visa")
+                    .font(.subheadline)
+                    .fontWeight(.semibold)
+                    .padding(6)
+                    .background(.blue)
+                    .cornerRadius(4)
+                    .foregroundColor(.white)
+                    .padding(.leading)
+                
+                Text("**** 1234")
+                    .fontWeight(.bold)
+                
+                Spacer()
+                
+                Image(systemName: "chevron.right")
+                    .imageScale(.medium)
+                    .padding()
+            }
+            .frame(height: 50)
+            .background(Color(.systemGroupedBackground))
+            .cornerRadius(10)
+            .padding(.horizontal)
+            
             // MARK: - Request Ride Button
+            
+            Button {
+                
+            } label: {
+                // Give the button a width because it is not wrapped in an HStack.
+                Text("CONFIRM RIDE")
+                    .fontWeight(.bold)
+                    .frame(width: UIScreen.main.bounds.width - 32, height: 50)
+                    .background(.blue)
+                    .cornerRadius(10)
+                    .foregroundColor(.white)
+            }
         }
+        .background(.white)
     }
 }
 
