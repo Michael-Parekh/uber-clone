@@ -12,6 +12,7 @@ struct MapViewActionButton: View {
     // Add a binding variable (https://developer.apple.com/documentation/swiftui/binding) to change the state of the button based on the user actions.
     // This is a binding property - everytime we initialize the view, we need to pass in the boolean to determine what to show.
     @Binding var mapState: MapViewState
+    @EnvironmentObject var viewModel: LocationSearchViewModel
     
     var body: some View {
         Button {
@@ -41,6 +42,8 @@ struct MapViewActionButton: View {
         case .locationSelected:
             // If the user hits the button on the location selected screen, go back to the home view (default 'noInput' state).
             mapState = .noInput
+            // Everytime we exit the 'locationSelected' state, we wipe out the previous location so that we do not draw a polyline to it as well. 
+            viewModel.selectedLocationCoordinate = nil
         }
     }
     
