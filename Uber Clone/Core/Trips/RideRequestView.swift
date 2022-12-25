@@ -8,6 +8,10 @@
 import SwiftUI
 
 struct RideRequestView: View {
+    
+    // Default the currently selected ride type to UberX (so that we can dynamically change style properties based on which one is selected).
+    @State private var selectedRideType: RideType = .uberX
+    
     var body: some View {
         VStack {
             Capsule()
@@ -76,26 +80,33 @@ struct RideRequestView: View {
             // Horizontal scrollable view of all of the ride options (e.g. Uber Black).
             ScrollView(.horizontal) {
                 HStack(spacing: 12) {
-                    ForEach(0 ..< 3, id: \.self) { _ in
+                    ForEach(RideType.allCases) { type in
                         VStack(alignment: .leading) {
                             // The image will scale itself to fit the frame of the VStack because of 'scaledToFit'.
-                            Image("uber-x")
+                            Image(type.imageName)
                                 .resizable()
                                 .scaledToFit()
                             
                             // Wrap the text in its own VStack so that we can apply custom spacing and other propeerties to it.
-                            VStack(spacing: 4) {
-                                Text("UberX")
+                            VStack(alignment: .leading, spacing: 4) {
+                                Text(type.description)
                                     .font(.system(size: 14, weight: .semibold))
                                 
                                 Text("$22.04")
                                     .font(.system(size: 14, weight: .semibold))
                             }
-                            .padding(8)
+                            .padding()
                         }
                         .frame(width: 112, height: 140)
-                        .background(Color(.systemGroupedBackground))
+                        .foregroundColor(type == selectedRideType ? .white : .black)
+                        .background(Color(type == selectedRideType ? .systemBlue : .systemGroupedBackground))
+                        .scaleEffect(type == selectedRideType ? 1.2 : 1.0)
                         .cornerRadius(10)
+                        .onTapGesture {
+                            withAnimation(.spring()) {
+                                selectedRideType = type
+                            }
+                        }
                     }
                 }
             }
