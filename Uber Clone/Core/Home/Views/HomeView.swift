@@ -14,29 +14,38 @@ struct HomeView: View {
     @State private var mapState = MapViewState.noInput
     
     var body: some View {
-        // Utilize a Z-Stack to place the 'LocationSearchActivationView' search bar on top of the map view.
-        ZStack(alignment: .top) {
-            UberMapViewRepresentable(mapState: $mapState)
-                .ignoresSafeArea()
-            
-            // Presentation logic on which view to show based on the map view state (when the state changes, the view redraws itself).
-            if mapState == MapViewState.searchingForLocation {
-                LocationSearchView(mapState: $mapState)
-            } else if mapState == MapViewState.noInput {
-                LocationSearchActivationView()
-                    .padding(.top, 72)
-                    .onTapGesture {
-                        withAnimation(.spring()) {
-                            mapState = .searchingForLocation
+        ZStack(alignment: .bottom) {
+            // Utilize a Z-Stack to place the 'LocationSearchActivationView' search bar on top of the map view.
+            ZStack(alignment: .top) {
+                UberMapViewRepresentable(mapState: $mapState)
+                    .ignoresSafeArea()
+                
+                // Presentation logic on which view to show based on the map view state (when the state changes, the view redraws itself).
+                if mapState == MapViewState.searchingForLocation {
+                    LocationSearchView(mapState: $mapState)
+                } else if mapState == MapViewState.noInput {
+                    LocationSearchActivationView()
+                        .padding(.top, 72)
+                        .onTapGesture {
+                            withAnimation(.spring()) {
+                                mapState = .searchingForLocation
+                            }
                         }
-                    }
+                }
+                
+                // Because 'showLocationSearchView' is a binding variable in the 'MapViewActionButton', whenever it changes the state will change here as well (properties are bound together).
+                MapViewActionButton(mapState: $mapState)
+                    .padding(.leading)
+                    .padding(.top, 4)
             }
             
-            // Because 'showLocationSearchView' is a binding variable in the 'MapViewActionButton', whenever it changes the state will change here as well (properties are bound together).
-            MapViewActionButton(mapState: $mapState)
-                .padding(.leading)
-                .padding(.top, 4)
+            // This ZStack is where we present the ride request view at the bottom of the screen.
+            if mapState == .locationSelected {
+                RideRequestView()
+                    .transition(.move(edge: .bottom))
+            }
         }
+        .edgesIgnoringSafeArea(.bottom)
     }
 }
 

@@ -107,9 +107,6 @@ extension UberMapViewRepresentable {
             parent.mapView.addAnnotation(anno)
             // Makes the pin larger.
             parent.mapView.selectAnnotation(anno, animated: true)
-            
-            // Adjust the region of the map view to include both the current location and destination annotation.
-            parent.mapView.showAnnotations(parent.mapView.annotations, animated: true)
         }
         
         // This helper function will help us configure the polyline using the destination route.
@@ -118,6 +115,10 @@ extension UberMapViewRepresentable {
             
             getDestinationRoute(from: userLocationCoordinate, to: coordinate) { route in
                 self.parent.mapView.addOverlay(route.polyline)
+                
+                // Shrink the map view to fit the region of the polyline when the ride request card is opened (the height of the 'RideRequestView' card is ~500px).
+                let rect = self.parent.mapView.mapRectThatFits(route.polyline.boundingMapRect, edgePadding: .init(top: 64, left: 32, bottom: 500, right: 32))
+                self.parent.mapView.setRegion(MKCoordinateRegion(rect), animated: true)
             }
         }
         
