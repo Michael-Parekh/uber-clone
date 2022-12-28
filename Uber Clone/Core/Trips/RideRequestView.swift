@@ -11,6 +11,8 @@ struct RideRequestView: View {
     
     // Default the currently selected ride type to UberX (so that we can dynamically change style properties based on which one is selected).
     @State private var selectedRideType: RideType = .uberX
+    // Utilize the 'LocationSearchViewModel' to compute the ride price for the selected ride type.
+    @EnvironmentObject var locationViewModel: LocationSearchViewModel
     
     var body: some View {
         VStack {
@@ -92,7 +94,8 @@ struct RideRequestView: View {
                                 Text(type.description)
                                     .font(.system(size: 14, weight: .semibold))
                                 
-                                Text("$22.04")
+                                // Use the Double extension that we created to correctly format the ride price.
+                                Text(locationViewModel.computeRidePrice(forType: type).toCurrency())
                                     .font(.system(size: 14, weight: .semibold))
                             }
                             .padding()

@@ -11,8 +11,9 @@ import MapKit
 // A 'UIViewRepresentable' is a wrapper for a UIKit view that you use to integrate that view into your SwiftUI view hierarchy.
 // Because we need complex map functionality like annotations and routes, we need to use UIKit's map (instead of SwiftUI's).
 struct UberMapViewRepresentable: UIViewRepresentable {
+    // Do NOT publish values from this structure because it will cause a retain cycle. For example, if we update a property on the 'locationViewModel' (which we are also observing), it would trigger the listener in this structure and cause an endless cycle.
     let mapView = MKMapView()
-    let locationManager = LocationManager()
+    let locationManager = LocationManager.shared
     @Binding var mapState: MapViewState
     // We need a 'StateObject' that will allow us to observe changes on the view model. Whenever the 'selectedLocation' property gets populated, the 'updateUIView' function will get triggered.
     @EnvironmentObject var locationViewModel: LocationSearchViewModel

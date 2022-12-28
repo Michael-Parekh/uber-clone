@@ -12,6 +12,7 @@ struct HomeView: View {
     
     // We need to add a tap gesture to the 'LocationSearchActivationView'. This map state property will determine whether or not that view is shown (defaulted to 'noInput').
     @State private var mapState = MapViewState.noInput
+    @EnvironmentObject var locationViewModel: LocationSearchViewModel
     
     var body: some View {
         ZStack(alignment: .bottom) {
@@ -46,6 +47,14 @@ struct HomeView: View {
             }
         }
         .edgesIgnoringSafeArea(.bottom)
+        // 'onReceive' allows us to execute a piece of code when we recieve a value from some publisher.
+        .onReceive(LocationManager.shared.$userLocation) { location in
+            // We have successfully passed the user's location into the 'HomeView'.
+            if let location = location {
+                // Now we need to pass the user location to a different place through the use of a view model (then we will be able to access it in the 'RideRequestView' and compute the trip price).
+                locationViewModel.userLocation = location
+            }
+        }
     }
 }
 
