@@ -39,7 +39,7 @@ struct MapViewActionButton: View {
             print("DEBUG: No input")
         case .searchingForLocation:
             mapState = .noInput
-        case .locationSelected:
+        case .locationSelected, .polylineAdded:
             // If the user hits the button on the location selected screen, go back to the home view (default 'noInput' state).
             mapState = .noInput
             // Everytime we exit the 'locationSelected' state, we wipe out the previous location so that we do not draw a polyline to it as well. 
@@ -52,8 +52,10 @@ struct MapViewActionButton: View {
         switch state {
         case .noInput:
             return "line.3.horizontal"
-        case .searchingForLocation, .locationSelected:
+        case .searchingForLocation, .locationSelected, .polylineAdded:
             return "arrow.left"
+        default:
+            return "line.3.horizontal"
         }
     }
 }

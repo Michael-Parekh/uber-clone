@@ -41,7 +41,7 @@ struct HomeView: View {
             }
             
             // This ZStack is where we present the ride request view at the bottom of the screen.
-            if mapState == .locationSelected {
+            if mapState == .locationSelected || mapState == .polylineAdded {
                 RideRequestView()
                     .transition(.move(edge: .bottom))
             }

@@ -44,6 +44,9 @@ struct UberMapViewRepresentable: UIViewRepresentable {
                 context.coordinator.configurePolyline(withDestinationCoordinate: coordinate)
             }
             break
+        case .polylineAdded:
+            // Do not do anything in the 'polylineAdded' state (so that we do not keep adding the annotation to the map once the polyline is already drawn).
+            break
         }
     }
     
@@ -115,6 +118,7 @@ extension UberMapViewRepresentable {
             parent.locationViewModel.getDestinationRoute(from: userLocationCoordinate,
                                                          to: coordinate) { route in
                 self.parent.mapView.addOverlay(route.polyline)
+                self.parent.mapState = .polylineAdded
                 
                 // Shrink the map view to fit the region of the polyline when the ride request card is opened (the height of the 'RideRequestView' card is ~500px).
                 let rect = self.parent.mapView.mapRectThatFits(route.polyline.boundingMapRect, edgePadding: .init(top: 64, left: 32, bottom: 500, right: 32))
