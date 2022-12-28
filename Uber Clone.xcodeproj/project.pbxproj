@@ -23,6 +23,7 @@
 		7337ADDA294FD25800147809 /* LocationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7337ADD9294FD25800147809 /* LocationManager.swift */; };
 		7374C2AC295CAB2700E7A10E /* Double.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7374C2AB295CAB2700E7A10E /* Double.swift */; };
 		7374C2AE295CB84900E7A10E /* UberLocation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7374C2AD295CB84900E7A10E /* UberLocation.swift */; };
+		7374C2B0295CCF6F00E7A10E /* Color.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7374C2AF295CCF6F00E7A10E /* Color.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -43,6 +44,7 @@
 		7337ADD9294FD25800147809 /* LocationManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationManager.swift; sourceTree = "<group>"; };
 		7374C2AB295CAB2700E7A10E /* Double.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Double.swift; sourceTree = "<group>"; };
 		7374C2AD295CB84900E7A10E /* UberLocation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UberLocation.swift; sourceTree = "<group>"; };
+		7374C2AF295CCF6F00E7A10E /* Color.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Color.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -160,6 +162,7 @@
 			isa = PBXGroup;
 			children = (
 				7374C2AB295CAB2700E7A10E /* Double.swift */,
+				7374C2AF295CCF6F00E7A10E /* Color.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -277,6 +280,7 @@
 				73312957295756DB00D792D1 /* MapViewState.swift in Sources */,
 				7331294F2953E5CF00D792D1 /* MapViewActionButton.swift in Sources */,
 				7337ADC1294FB9DC00147809 /* Uber_CloneApp.swift in Sources */,
+				7374C2B0295CCF6F00E7A10E /* Color.swift in Sources */,
 				7337ADD8294FBD9700147809 /* UberMapViewRepresentable.swift in Sources */,
 				7331294D2953E50C00D792D1 /* HomeView.swift in Sources */,
 				7374C2AE295CB84900E7A10E /* UberLocation.swift in Sources */,
