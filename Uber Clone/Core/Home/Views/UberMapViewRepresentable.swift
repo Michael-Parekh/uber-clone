@@ -31,8 +31,6 @@ struct UberMapViewRepresentable: UIViewRepresentable {
     
     // This function is in charge of updating the view when we want to do something (e.g. draw a polyline when the user selects a location).
     func updateUIView(_ uiView: UIViewType, context: Context) {
-        print("DEBUG: Map state is \(mapState)")
-        
         switch mapState {
         case .noInput:
             context.coordinator.clearMapViewAndRecenterOnUserLocation()
@@ -41,7 +39,7 @@ struct UberMapViewRepresentable: UIViewRepresentable {
             break
         case .locationSelected:
             // If a location is selected, convert the 'selectedLocation' string to a location object. In order to generate annotations on our map, we need more data.
-            if let coordinate = locationViewModel.selectedLocationCoordinate {
+            if let coordinate = locationViewModel.selectedUberLocation?.coordinate {
                 context.coordinator.addAndSelectAnnotation(withCoordinate: coordinate)
                 context.coordinator.configurePolyline(withDestinationCoordinate: coordinate)
             }

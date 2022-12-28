@@ -16,7 +16,7 @@ class LocationSearchViewModel: NSObject, ObservableObject {
     // @Published is one of the property wrappers in SwiftUI that allows us to trigger a view redraw whenever changes occur.
     @Published var results = [MKLocalSearchCompletion]()
     // Because there is no selected location initially, make it optional. If the user selects something, populate the property.
-    @Published var selectedLocationCoordinate: CLLocationCoordinate2D?
+    @Published var selectedUberLocation: UberLocation?
     private let searchCompleter = MKLocalSearchCompleter()
     var queryFragment: String = "" {
         // Everytime we set the 'queryFragment' (everytime the input text field changes), execute this code.
@@ -46,9 +46,7 @@ class LocationSearchViewModel: NSObject, ObservableObject {
             
             guard let item = response?.mapItems.first else { return }
             let coordinate = item.placemark.coordinate
-            self.selectedLocationCoordinate = coordinate
-            
-            print("DEBUG: Location coordinates \(coordinate)")
+            self.selectedUberLocation = UberLocation(title: localSearch.title, coordinate: coordinate)
         }
     }
     
@@ -63,7 +61,7 @@ class LocationSearchViewModel: NSObject, ObservableObject {
     }
     
     func computeRidePrice(forType type: RideType) -> Double {
-        guard let destCoordinate = selectedLocationCoordinate else { return 0.0 }
+        guard let destCoordinate = selectedUberLocation?.coordinate else { return 0.0 }
         guard let userCoordinate = self.userLocation else { return 0.0 }
         
         let userLocation = CLLocation(latitude: userCoordinate.latitude,

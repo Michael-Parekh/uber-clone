@@ -22,6 +22,7 @@
 		7337ADD8294FBD9700147809 /* UberMapViewRepresentable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7337ADD7294FBD9700147809 /* UberMapViewRepresentable.swift */; };
 		7337ADDA294FD25800147809 /* LocationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7337ADD9294FD25800147809 /* LocationManager.swift */; };
 		7374C2AC295CAB2700E7A10E /* Double.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7374C2AB295CAB2700E7A10E /* Double.swift */; };
+		7374C2AE295CB84900E7A10E /* UberLocation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7374C2AD295CB84900E7A10E /* UberLocation.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -41,6 +42,7 @@
 		7337ADD7294FBD9700147809 /* UberMapViewRepresentable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UberMapViewRepresentable.swift; sourceTree = "<group>"; };
 		7337ADD9294FD25800147809 /* LocationManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationManager.swift; sourceTree = "<group>"; };
 		7374C2AB295CAB2700E7A10E /* Double.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Double.swift; sourceTree = "<group>"; };
+		7374C2AD295CB84900E7A10E /* UberLocation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UberLocation.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -141,6 +143,7 @@
 			children = (
 				73312956295756DB00D792D1 /* MapViewState.swift */,
 				7331295B2958CFA700D792D1 /* RideType.swift */,
+				7374C2AD295CB84900E7A10E /* UberLocation.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -276,6 +279,7 @@
 				7337ADC1294FB9DC00147809 /* Uber_CloneApp.swift in Sources */,
 				7337ADD8294FBD9700147809 /* UberMapViewRepresentable.swift in Sources */,
 				7331294D2953E50C00D792D1 /* HomeView.swift in Sources */,
+				7374C2AE295CB84900E7A10E /* UberLocation.swift in Sources */,
 				7331294B2953D5D200D792D1 /* LocationSearchActivationView.swift in Sources */,
 				733129532953FCCB00D792D1 /* LocationSearchResultCell.swift in Sources */,
 				7331295C2958CFA700D792D1 /* RideType.swift in Sources */,

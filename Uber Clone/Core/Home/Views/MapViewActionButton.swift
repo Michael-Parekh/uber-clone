@@ -43,7 +43,7 @@ struct MapViewActionButton: View {
             // If the user hits the button on the location selected screen, go back to the home view (default 'noInput' state).
             mapState = .noInput
             // Everytime we exit the 'locationSelected' state, we wipe out the previous location so that we do not draw a polyline to it as well. 
-            viewModel.selectedLocationCoordinate = nil
+            viewModel.selectedUberLocation = nil
         }
     }
     
