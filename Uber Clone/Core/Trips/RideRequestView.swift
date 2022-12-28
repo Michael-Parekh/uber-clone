@@ -47,7 +47,8 @@ struct RideRequestView: View {
                         
                         Spacer()
                         
-                        Text("1:30 PM")
+                        // Fetch the published pickup time property from the 'locationViewModel'. If it is not there, make it a blank String.
+                        Text(locationViewModel.pickupTime ?? "")
                             .font(.system(size: 14, weight: .semibold))
                             .foregroundColor(.gray)
                     }
@@ -61,7 +62,7 @@ struct RideRequestView: View {
                         
                         Spacer()
                         
-                        Text("1:45 PM")
+                        Text(locationViewModel.dropoffTime ?? "")
                             .font(.system(size: 14, weight: .semibold))
                             .foregroundColor(.gray)
                     }
